@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calculator.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Core.Services
 {
-    public class TaxCalculator
+    public class TaxCalculator : ITaxCalculator
     {
         List<TaxRate> _taxRules = new List<TaxRate>();
         public TaxCalculator()

@@ -8,7 +8,7 @@ using Utilities.Exceptions;
 
 namespace PaySlipGeneratorNew.Infrastructure.Services.Transformers
 {
-    public class TransformerFactory
+    public class TransformerFactory : ITransformerFactory
     {
         public ITransformer FetchTransformer(FileExtensionType fileExtensionType)
         {

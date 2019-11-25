@@ -1,4 +1,5 @@
-﻿using PaySlipGeneratorNew.Core.Model;
+﻿using PaySlipGeneratorNew.Core.Interfaces;
+using PaySlipGeneratorNew.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PaySlipGeneratorNew.Core.Services
 {
-    public class OutputWriter
+    public class OutputWriter : IOutputWriter
     {
         public void Write(List<EmployeeMonthlyPaySlip> employeesMonthlyPaySlip)
         {

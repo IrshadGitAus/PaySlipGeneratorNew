@@ -1,4 +1,5 @@
-﻿using Calculator.Core.Model;
+﻿using Calculator.Core.Interfaces;
+using Calculator.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace Calculator.Core.Services
 {
-    public class SalaryCalculator
+    public class SalaryCalculator : ISalaryCalculator
     {
-        public SalaryCalculator()
+        private ITaxCalculator _taxCalculator;
+        public SalaryCalculator(ITaxCalculator taxCalculator)
         {
-
+            _taxCalculator = taxCalculator;
         }
+
         public SalaryDto CalculateSalary(decimal annualSalary, decimal superPercantage)
         {
 
@@ -28,8 +31,16 @@ namespace Calculator.Core.Services
             salary.GrossSalary = grossMonthlySalary;
 
             //income tax
-            TaxCalculator tc = new TaxCalculator();
-            salary.IncomeTax=tc.CalculateTax(annualSalary);
+            //TaxCalculator tc = new TaxCalculator();
+
+            salary.IncomeTax = _taxCalculator.CalculateTax(annualSalary);
+
+            //salary.IncomeTax= _taxCalculator.CalculateTax(annualSalary);
+            //salary.IncomeTax = _taxCalculator.CalculateTax(annualSalary);
+
+            //salary.IncomeTax = 922;
+
+
 
             //Net income
             var netIncome = grossMonthlySalary - salary.IncomeTax;

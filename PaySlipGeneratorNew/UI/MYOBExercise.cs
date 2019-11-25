@@ -1,4 +1,5 @@
-﻿using PaySlipGeneratorNew.Core.Model;
+﻿using PaySlipGeneratorNew.Core.Interfaces;
+using PaySlipGeneratorNew.Core.Model;
 using PaySlipGeneratorNew.Core.Services;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,14 @@ namespace PaySlipGeneratorNew.UI
         private Label labelErrorMessage;
         private Button buttonFileBrowse;
 
-        public MYOBExercise()
+        private IEmployeePaySlipService _employeePaySlipService;
+        private IOutputWriter _outputWriter;
+
+        public MYOBExercise(IEmployeePaySlipService employeePaySlipService, IOutputWriter outputWriter)
         {
             InitializeComponent();
+            _employeePaySlipService = employeePaySlipService;
+            _outputWriter = outputWriter;
         }
 
         private void InitializeComponent()
@@ -80,14 +86,15 @@ namespace PaySlipGeneratorNew.UI
                         using (var fileStream = new StreamReader(openFileDialog.OpenFile()))
                         {
                             //fileStream
-                            EmployeePaySlipService employeePaySlipService = new EmployeePaySlipService();
-                            var _outputFileWriter = new OutputWriter();
+                            //EmployeePaySlipService employeePaySlipService = new EmployeePaySlipService();
+                            
+                            //var _outputFileWriter = new OutputWriter();
 
-                            var employeesMonthlyPaySlip = employeePaySlipService.GetEmployeesPaySlip(fileStream, fileExtensionType);
+                            var employeesMonthlyPaySlip = _employeePaySlipService.GetEmployeesPaySlip(fileStream, fileExtensionType);
 
                             if (employeesMonthlyPaySlip != null && employeesMonthlyPaySlip.Any())
                             {
-                                _outputFileWriter.Write(employeesMonthlyPaySlip);
+                                _outputWriter.Write(employeesMonthlyPaySlip);
                             }
                         }
                     }

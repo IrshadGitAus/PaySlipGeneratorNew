@@ -1,10 +1,13 @@
-﻿using PaySlipGeneratorNew.UI;
+﻿using PaySlipGeneratorNew.Core.Interfaces;
+using PaySlipGeneratorNew.Infrastructure.Services;
+using PaySlipGeneratorNew.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
 
 namespace PaySlipGeneratorNew
 {
@@ -15,7 +18,11 @@ namespace PaySlipGeneratorNew
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MYOBExercise());
+            
+            ExerciseContainerConfigurator.RegisterDependencies();
+            var employeePaySlipService = ExerciseContainerConfigurator.ExerciseContainer.Resolve<IEmployeePaySlipService>();
+            var outputFileWriter = ExerciseContainerConfigurator.ExerciseContainer.Resolve<IOutputWriter>();
+            Application.Run(new MYOBExercise(employeePaySlipService, outputFileWriter));
         }
     }
 }
